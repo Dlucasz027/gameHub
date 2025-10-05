@@ -1,14 +1,16 @@
+require('dotenv').config();
+
 async function fetchSubscriberCount() {
-    const channelId = 'UCfTXtop2YQ3yF6UJmlxP-RQ';  // Channel ID (ID do canal)
-    const apiKey = '#'; // API Key (Chave da API)
+    const channelId = 'UCfTXtop2YQ3yF6UJmlxP-RQ';
+    const apiKey = process.env.API_KEY; 
     const url = `https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${channelId}&key=${apiKey}`;
 
     try {
         const response = await fetch(url);
-        if (!response.ok) throw new Error('Error with the request'); // Erro na requisição
+        if (!response.ok) throw new Error('Error with the request'); // Tratamento de erro
 
         const data = await response.json();
-        console.log(data);  // Displays the API response in the console (Exibe a resposta da API no console)
+        console.log(data);  //Exibe a resposta da API no console
 
         if (data.items && data.items.length > 0) {
             const subscriberCount = parseInt(data.items[0].statistics.subscriberCount, 10);
